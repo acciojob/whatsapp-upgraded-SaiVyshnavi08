@@ -91,6 +91,18 @@ public class WhatsappRepository {
         userData.remove(user.getMobile());
         return groupUsersMap.get(group).size()+groupMessagesMap.get(group).size()+messageDB.size();
     }
+    public String findMessage(Date start, Date end, int K) throws Exception{
+        List<Message> messageList = new ArrayList<>();
+        for(Message message : messageDB.values()) {
+            if(message.getTimestamp().compareTo(start)>1 && message.getTimestamp().compareTo(end)<1) {
+                messageList.add(message);
+            }
+        }
+        if(messageList.size()<K) {
+            throw new Exception("K is greater than the number of messages");
+        }
+        return messageList.get(messageList.size()-K).getContent();
+    }
     }
 
 
